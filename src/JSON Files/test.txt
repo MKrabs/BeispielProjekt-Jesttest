@@ -1,0 +1,28 @@
+type TypedDef<Data, Computed> =
+  ComponentOptions<Data, Computed> &
+  ThisType<Data & Computed>
+
+type DataDef<Data> = () => Data
+
+export interface ComponentOptions<Data, Computed> {
+  data?: DataDef<Data>
+  computed?: Accessors<Computed>
+}
+export type Accessors<T> = {
+  [K in keyof T]: () => T[K]
+}
+
+declare function component<Data, Computed>(def: TypedDef<Data, Computed>): void;
+
+component({
+  data() {
+    return {
+      foo: 23
+    }
+  },
+  computed: {
+    bar() {
+      // return this.foo + 1 // comment out the return solves the problem
+    }
+  }
+})

@@ -2,7 +2,7 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="/BasicTests">Jesting</router-link> |
     </div>
     <router-view />
   </div>
@@ -28,5 +28,33 @@
 
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+
+.table {
+  overflow: hidden;
+}
+
+table {
+  margin: auto;
+}
+
+.bborder {
+  border: solid 1px #2c3e50;
+  border-radius: 4px;
+  margin: 24px 8px 8px 8px;
+  padding: 14px;
+  position: relative;
+}
+
+.bborder p:first-child {
+  position: absolute;
+  top: -10px;
+  left: 10px;
+  margin: 0;
+  background-color: white;
+  color: #42b983;
+  font-weight: bold;
+  padding: 0 8px;
+  display: inline-block;
 }
 </style>
