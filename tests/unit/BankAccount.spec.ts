@@ -7,34 +7,33 @@ describe("BankAccount.vue", () => {
     expect(wrapper.exists()).toBe(true);
   });
 
-  it("renders the Name properly", async () => {
-    const User = "Marc";
-    const wrapper = shallowMount(Bank, {
-      propsData: { User },
+  describe("renders different Names properly", () => {
+    test.each`
+      input            | output
+      ${"User1"}       | ${"User1"}
+      ${""}            | ${""}
+      ${'!"§$%&/()=?'} | ${'!"§$%&/()=?'}
+      ${"最近の更新"}  | ${"最近の更新"}
+      ${"🐧"}          | ${"🐧"}
+      ${123}           | ${"123"}
+      ${null}          | ${""}
+      ${undefined}     | ${""}
+    `("renders the Name $input properly", async ({ input, output }) => {
+      const wrapper = shallowMount(Bank, { propsData: { User: input } });
+      expect(wrapper.find("h2").text().startsWith(output));
     });
-    expect(wrapper.find("h2").text()).toBe(User + "'s Balance: 0");
   });
 
-  it("The money goes up by 1", async () => {
-    const wrapper = shallowMount(Bank);
-    const button = wrapper.find("button");
-    await wrapper.vm.$nextTick();
-    expect(wrapper.vm.$data.balance).toBe(0);
-    for (let i = 1; i < 10; i++) {
-      await button.trigger("click");
-      expect(wrapper.vm.$data.balance).toBe(i);
-    }
-  });
-
-  it("The money goes up by intake", async () => {
-    const wrapper = shallowMount(Bank);
-    const intake = 14;
-    await wrapper.setData({ intake: intake });
-    const button = wrapper.find("#make");
-    for (let i = 1; i < 10; i++) {
-      await button.trigger("click");
-      expect(wrapper.vm.$data.balance).toBe(intake * i);
-    }
+  describe("Clicking the MAKE button increases the balance", () => {
+    test.each([1, 14, 10000000])("The money goes up by %i", async (intake) => {
+      const wrapper = shallowMount(Bank);
+      await wrapper.setData({ intake: intake });
+      const button = wrapper.find("#make");
+      for (let i = 1; i < 10; i++) {
+        await button.trigger("click");
+        expect(wrapper.vm.$data.balance).toBe(intake * i);
+      }
+    });
   });
 
   it("The money doubles", async () => {
@@ -46,13 +45,14 @@ describe("BankAccount.vue", () => {
     expect(wrapper.vm.$data.balance).toBe(balance * 2);
   });
 
-  it("Nothing can be bought without money", async () => {
-    const wrapper = shallowMount(Bank);
-    await wrapper.find("#intake").trigger("click");
-    await wrapper.find("#intake").trigger("autoclicker");
-    expect(wrapper.vm.$data.balance).toBe(0);
-    expect(wrapper.vm.$data.intake).toBe(1);
-    expect(wrapper.vm.$data.intakepersecond).toBe(0);
+  describe("Nothing can be bought without money", () => {
+    test.each(["intake", "autoclicker"])("Click button %s", async (button) => {
+      const wrapper = shallowMount(Bank);
+      await wrapper.find("#" + button).trigger("click");
+      expect(wrapper.vm.$data.balance).toBe(0);
+      expect(wrapper.vm.$data.intake).toBe(1);
+      expect(wrapper.vm.$data.intakepersecond).toBe(0);
+    });
   });
 
   it("The intakepersecond can be bought", async () => {
@@ -73,7 +73,7 @@ describe("BankAccount.vue", () => {
     expect(wrapper.vm.$data.intakepersecond).toBe(10);
   });
 
-  it("The intake produces money", async () => {
+  it("The intakepersecond produces money", async () => {
     const wrapper = shallowMount(Bank);
     const intakepersecond = 120;
     await wrapper.setData({ intakepersecond: intakepersecond });

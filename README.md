@@ -10,6 +10,11 @@ npm install
 npm run serve
 ```
 
+### Start the python backend
+```
+python3 FakeServer.py
+```
+
 ### Compiles and minifies for production
 ```
 npm run build

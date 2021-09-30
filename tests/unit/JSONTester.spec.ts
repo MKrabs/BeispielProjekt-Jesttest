@@ -4,7 +4,7 @@ import LoadJSON from "@/components/LoadJSON.vue";
 describe("LoadJSON.vue", () => {
   const data = [
     {
-      ID: 238764,
+      ID: 238064,
       Name: "Edward the Elder",
       Country: "United Kingdom",
       House: "House of Wessex",
@@ -12,39 +12,40 @@ describe("LoadJSON.vue", () => {
     {
       ID: 912685,
       Name: "Athelstan",
-      Country: "United Kingdom",
-      House: "House of Wessex",
+      Country: "United States of America",
+      House: "House St. Franco",
     },
     {
       ID: 193873,
       Name: "Edmund",
-      Country: "United Kingdom",
-      House: "House of Wessex",
+      Country: "Portugal",
+      House: "Casa de Janota",
     },
     {
       ID: 327882,
-      Name: "Edred",
-      Country: "United Kingdom",
-      House: "House of Wessex",
+      Name: "Marc",
+      Country: "Germany",
+      House: "Haus der Jestes",
     },
     {
       ID: 598372,
-      Name: "Edwy",
-      Country: "United Kingdom",
-      House: "House of Wessex",
+      Name: "Dimitri",
+      Country: "Russia",
+      House: "палата представителей",
     },
   ];
+
   it("renders the JSON div", () => {
     const wrapper = shallowMount(LoadJSON);
     expect(wrapper.exists()).toBe(true);
   });
 
-  it("Load the Data properly", async () => {
+  it("Loads the Data properly", () => {
     const wrapper = shallowMount(LoadJSON);
     expect(wrapper.vm.$data.applicants).toEqual(data);
   });
 
-  it("Selected options should be saved in var selected", async () => {
+  it("Saves the selected options", () => {
     const wrapper = shallowMount(LoadJSON);
     for (let i = 0; i < 4; i++) {
       wrapper.find("select").findAll("option").at(i).setSelected();
@@ -52,15 +53,15 @@ describe("LoadJSON.vue", () => {
     }
   });
 
-  it("Empty selection should be dash", async () => {
+  it("Renders empty selection as dash", () => {
     const wrapper = shallowMount(LoadJSON);
     const rendered = wrapper.findAll("td");
-    for (let i = 0; i < 4; i++) {
-      expect(rendered.at(3).text()).toEqual("-");
+    for (let i = 0; i < rendered.length; i++) {
+      expect(rendered.at(i).text()).toEqual("-");
     }
   });
 
-  it("Selection renders when selected", async () => {
+  it("Renders selection when selected", async () => {
     const wrapper = shallowMount(LoadJSON);
     for (let i = 0; i < 4; i++) {
       await wrapper.find("select").findAll("option").at(i).setSelected();

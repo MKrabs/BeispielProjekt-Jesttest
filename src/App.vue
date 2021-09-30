@@ -2,7 +2,7 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link> |
-      <router-link to="/BasicTests">Jesting</router-link> |
+      <router-link to="/BasicTests">Jesting</router-link>
     </div>
     <router-view />
   </div>
@@ -30,12 +30,13 @@
   color: #42b983;
 }
 
-.table {
-  overflow: hidden;
-}
-
 table {
   margin: auto;
+}
+
+table th {
+  text-align: left;
+  width: 100px;
 }
 
 .bborder {

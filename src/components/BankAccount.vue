@@ -1,7 +1,7 @@
 <template>
   <div id="Bank">
     <h2>
-      {{ User }}'s Balance: {{ Math.floor(balance) }}
+      {{ User }}'s Balance: {{ Math.floor(balance) }}€
       <span v-if="showBigStacks()"> !!</span>
     </h2>
     <button
@@ -9,7 +9,7 @@
       style="margin-bottom: 2em; padding: 8px"
       @click="addMoney()"
     >
-      MAKE
+      Deposit
     </button>
     <div class="table">
       <table>
@@ -19,23 +19,23 @@
           <th>Cost</th>
         </tr>
         <tr>
-          <td>Click Force:</td>
+          <td>Deposit Force</td>
           <td>
-            +<b>{{ intake }}</b>
+            <b>{{ intake }}</b>€
           </td>
           <td>
             <button id="intake" @click="increaseIntake()">{{ cost }}€</button>
           </td>
         </tr>
         <tr>
-          <td>Double your Bank</td>
+          <td>Double your Balance</td>
           <td>x2</td>
           <td>
             <button id="double" @click="doubleMoney()">CLICK HERE</button>
           </td>
         </tr>
         <tr>
-          <td>Buy an autoclicker</td>
+          <td>Invest in Stocks</td>
           <td>+{{ intakepersecond }}€/s</td>
           <td>
             <button id="autoclicker" @click="intakePerSecond()">
@@ -93,9 +93,6 @@ export default {
         this.balance -= this.intakepersecond * 2 + 50;
         this.intakepersecond += 10;
       }
-    },
-    transfer(amount, account) {
-      this.$emit("uberweisung", [amount, account]);
     },
   },
 };

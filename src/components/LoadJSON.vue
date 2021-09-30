@@ -7,7 +7,7 @@
         v-bind:value="people"
         :key="index"
       >
-        {{people.ID}} - {{ people.Name }}
+        {{ people.ID }} - {{ people.Name }}
       </option>
     </select>
     <div class="table">
@@ -44,7 +44,6 @@ export default {
     return {
       applicants: JSONdata,
       selected: {
-        type: Object,
         ID: "-",
         Name: "-",
         Country: "-",
@@ -58,10 +57,5 @@ export default {
 <style scoped>
 select {
   margin: 12px;
-}
-
-table th {
-  text-align: left;
-  width: 100px;
 }
 </style>
