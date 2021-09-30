@@ -4,7 +4,7 @@ import BankAccount from "@/components/BankAccount.vue";
 
 describe("Bank.vue", () => {
   describe("Unit tests", () => {
-    it("Initializes and renders the Bank div properly", () => {
+    it("Initializes the Bank div properly", () => {
       const wrapper = shallowMount(Bank);
       expect(wrapper.exists()).toBe(true);
       expect(wrapper.vm.$data.accounts).toEqual([]);
@@ -17,7 +17,7 @@ describe("Bank.vue", () => {
       ${["User1", "User2", "User3"]} | ${3}
       ${[]}                          | ${0}
     `(
-      "Should save $Size accounts as data and render $Names",
+      "Should save $Size account(s) in data and render $Names",
       async ({ Names, Size }) => {
         const wrapper = shallowMount(Bank);
         expect(wrapper.vm.$data.accounts).toStrictEqual([]);

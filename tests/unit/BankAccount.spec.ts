@@ -24,7 +24,7 @@ describe("BankAccount.vue", () => {
     });
   });
 
-  describe("Clicking the MAKE button increases the balance", () => {
+  describe("Clicking the DEPOSIT button increases the balance", () => {
     test.each([1, 14, 10000000])("The money goes up by %i", async (intake) => {
       const wrapper = shallowMount(Bank);
       await wrapper.setData({ intake: intake });
@@ -36,7 +36,7 @@ describe("BankAccount.vue", () => {
     });
   });
 
-  it("The money doubles", async () => {
+  it("Doubles the money", async () => {
     const wrapper = shallowMount(Bank);
     const balance = 14;
     await wrapper.setData({ balance: balance });
@@ -55,15 +55,6 @@ describe("BankAccount.vue", () => {
     });
   });
 
-  it("The intakepersecond can be bought", async () => {
-    const wrapper = shallowMount(Bank);
-    await wrapper.find("#intake").trigger("click");
-    expect(wrapper.vm.$data.balance).toBe(0);
-    await wrapper.find("#make").trigger("click");
-    await wrapper.find("#intake").trigger("click");
-    expect(wrapper.vm.$data.intake).toBe(2);
-  });
-
   it("The intake can be bought", async () => {
     const wrapper = shallowMount(Bank);
     const balance = 50;
@@ -71,6 +62,15 @@ describe("BankAccount.vue", () => {
     await wrapper.find("#autoclicker").trigger("click");
     expect(wrapper.vm.$data.balance).toBe(0);
     expect(wrapper.vm.$data.intakepersecond).toBe(10);
+  });
+
+  it("The intakepersecond can be bought", async () => {
+    const wrapper = shallowMount(Bank);
+    await wrapper.find("#intake").trigger("click");
+    expect(wrapper.vm.$data.balance).toBe(0);
+    await wrapper.find("#make").trigger("click");
+    await wrapper.find("#intake").trigger("click");
+    expect(wrapper.vm.$data.intake).toBe(2);
   });
 
   it("The intakepersecond produces money", async () => {

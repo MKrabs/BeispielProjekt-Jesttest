@@ -3,7 +3,7 @@ import BasicAPIcall from "@/components/BasicAPIcall.vue";
 import axios from "axios";
 
 describe("BasicCallAPI", () => {
-  it("renders the JSON div", () => {
+  it("Initialize the JSON div", () => {
     const wrapper = shallowMount(BasicAPIcall);
     expect(wrapper.exists()).toBe(true);
   });
@@ -13,14 +13,17 @@ describe("BasicCallAPI", () => {
     ["/text", undefined],
     ["/txet", undefined],
     ["/python", "disabled"],
-  ])("$output input when %a[0] is selected", async (path, output) => {
-    const wrapper = shallowMount(BasicAPIcall);
-    await wrapper.setData({ selected: path });
-    expect(wrapper.find("#textfield").attributes()["disabled"]).toBe(output);
-    expect(wrapper.find("input[type=checkbox]").attributes()["disabled"]).toBe(
-      output
-    );
-  });
+  ])(
+    "%p is selected, inputs attribute 'disabled' should be %p",
+    async (path, output) => {
+      const wrapper = shallowMount(BasicAPIcall);
+      await wrapper.setData({ selected: path });
+      expect(wrapper.find("#textfield").attributes()["disabled"]).toBe(output);
+      expect(
+        wrapper.find("input[type=checkbox]").attributes()["disabled"]
+      ).toBe(output);
+    }
+  );
 });
 
 jest.mock("axios", () => {
@@ -31,7 +34,7 @@ jest.mock("axios", () => {
 });
 
 describe("When API call is successful", () => {
-  it("should show loading", async () => {
+  it("should show 'loading...'", async () => {
     const wrapper = shallowMount(BasicAPIcall);
     wrapper.find("form").trigger("submit");
     expect(wrapper.vm.$data.axiosResponse).toStrictEqual({
